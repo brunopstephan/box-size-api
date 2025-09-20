@@ -1,0 +1,9 @@
+services:
+  app:
+    build: .
+    container_name: box-size-api
+    env_file:
+      - .env
+    ports:
+      - "${PORT}:${PORT}"
+    restart: unless-stopped
