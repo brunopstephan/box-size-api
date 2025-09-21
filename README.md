@@ -48,7 +48,8 @@ SELECT
     SUM(TIMESTAMPDIFF(HOUR, cs.start_time, cs.end_time)) AS total_hours_per_week
 FROM PROFESSOR p
 JOIN TITLE t ON p.title_id = t.id
-LEFT JOIN CLASS c ON c.taught_by = p.id
+JOIN SUBJECT s ON s.professor_id = p.id
+LEFT JOIN CLASS c ON c.subject_id = s.id
 LEFT JOIN CLASS_SCHEDULE cs ON cs.class_id = c.id
 GROUP BY p.id, p.title_id, t.name
 ORDER BY total_hours_per_week DESC;
@@ -72,7 +73,7 @@ FROM ROOM r
 LEFT JOIN CLASS_SCHEDULE cs ON cs.room_id = r.id
 LEFT JOIN CLASS c ON cs.class_id = c.id
 LEFT JOIN SUBJECT s ON c.subject_id = s.id
-LEFT JOIN PROFESSOR p ON c.taught_by = p.id
+LEFT JOIN PROFESSOR p ON s.professor_id = p.id
 LEFT JOIN TITLE t ON p.title_id = t.id
 ORDER BY r.id, cs.day_of_week, cs.start_time;
 ```
